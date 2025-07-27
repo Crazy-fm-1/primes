@@ -26,23 +26,23 @@ ui <- page_navbar(
     )
   ),
   conditionalPanel(
-    condition = "!(Number.isInteger(input.n)) || input.n < 1 || input.n > 5000",
+    condition = "!(Number.isInteger(input.n)) || input.n < 1 || input.n > 1000",
     p("Invalid input", style = "color: red;")
 ),
   conditionalPanel(
-    condition = "input.func != '--' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 5000",
+    condition = "input.func != '--' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 1000",
     plotOutput("plot")
   ),
   conditionalPanel(
     withMathJax(),
-    condition = "input.func == 'Prime-counting function π(n)' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 5000",
+    condition = "input.func == 'Prime-counting function π(n)' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 1000",
     htmlOutput("pi_value"),
     p("The prime-counting function, also referred to as π(n), counts the number of prime numbers less than or equal to a real number n.
     The prime number theorem states: $$\\lim_{n \\to \\infty} \\frac{π(n)}{\\frac{n}{ln(n)}} = 1$$ This is equivalent to:
     $$π(n) \\sim \\frac{n}{ln(n)}$$ Thus, n/ln(n) approximates π(n) for large values of n. $$ $$")
   ),
   conditionalPanel(
-    condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n) && input.n <= 5000",
+    condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n) && input.n <= 1000",
     htmlOutput("phi_value"),
     p("Euler's φ function counts the number of positive integers less than or equal to a positive integer n that are coprime to n.
       Two integers are considered coprime, if their greatest common divisor is 1. φ(n) is referred to as the totient of n. n being a
@@ -93,22 +93,36 @@ ui <- page_navbar(
 
 server <- function(input, output){
   
-  output$pi_value <- renderUI({HTML(
+  output$pi_value <- renderUI({
+    
+    if (input$n <= 1000){
+    
+    HTML(
     paste0("π(", input$n, ") = ", primeCount(input$n))
-  )})
+  )
+    }  
+    })
   
-  output$phi_value <- renderUI({HTML(
+  output$phi_value <- renderUI({
+    
+    if (input$n <= 1000){
+    
+    HTML(
     paste0("φ(", input$n, ") = ", phi(input$n))
-  )})
+  )
+    }
+        })
   
   output$nth <- renderUI({
+    
+    if (input$n2 <= 5000000){
     
     HTML(
       paste0(
         "primes(", input$n2, ") = ", nth_prime(input$n2)
       )
     )
-    
+    }
   })
   
   output$prime <- renderUI({
@@ -249,7 +263,7 @@ server <- function(input, output){
               legend.text = element_text(size = 15)
             )
           
-        } else {
+        } else if (input$n <= 1000) {
           
           leg <- tibble(
             n = c(1, 1.5, 2, 2.01),
@@ -375,7 +389,7 @@ server <- function(input, output){
               legend.text = element_text(size = 15)
             )
           
-        } else {
+        } else if (input$n <= 1000) {
         
         num <- tibble(
           n = 1:input$n,
