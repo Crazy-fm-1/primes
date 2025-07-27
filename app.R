@@ -39,7 +39,7 @@ ui <- page_navbar(
     htmlOutput("pi_value"),
     p("The prime-counting function, also referred to as π(n), counts the number of prime numbers less than or equal to a real number n.
     The prime number theorem states: $$\\lim_{n \\to \\infty} \\frac{π(n)}{\\frac{n}{ln(n)}} = 1$$ This is equivalent to:
-    $$π(n) \\sim \\frac{n}{ln(n)}$$ Thus, n/ln(n) approximates π(n) for large values of n. $$  $$")
+    $$π(n) \\sim \\frac{n}{ln(n)}$$ Thus, n/ln(n) approximates π(n) for large values of n. $$ $$")
   ),
   conditionalPanel(
     condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n)",
@@ -82,7 +82,13 @@ ui <- page_navbar(
       condition = "Number.isInteger(input.n2) && input.n2 >= 1",
       htmlOutput("nth")
     )
-  )
+  ),
+   nav_panel(
+     "Impressum",
+     h3("Impressum"),
+     p("Anbieter:", br(), "Fedor Miasnikov", br(), "Silcherstr. 3", br(), "80807 München"),
+     p("Kontakt:", br(), "Telefon: 01721587811", br(), "E-Mail:miasnikowfedor@gmail.com")
+   )
 )
 
 server <- function(input, output){
