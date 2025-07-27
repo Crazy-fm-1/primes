@@ -26,23 +26,23 @@ ui <- page_navbar(
     )
   ),
   conditionalPanel(
-    condition = "!(Number.isInteger(input.n)) || input.n < 1",
+    condition = "!(Number.isInteger(input.n)) || input.n < 1 || input.n > 15000",
     p("Invalid input", style = "color: red;")
 ),
   conditionalPanel(
-    condition = "input.func != '--' && input.n >= 1 && Number.isInteger(input.n)",
-    plotOutput("plot", height = "600px")
+    condition = "input.func != '--' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 15000",
+    plotOutput("plot")
   ),
   conditionalPanel(
     withMathJax(),
-    condition = "input.func == 'Prime-counting function π(n)' && input.n >= 1 && Number.isInteger(input.n)",
+    condition = "input.func == 'Prime-counting function π(n)' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 15000",
     htmlOutput("pi_value"),
     p("The prime-counting function, also referred to as π(n), counts the number of prime numbers less than or equal to a real number n.
     The prime number theorem states: $$\\lim_{n \\to \\infty} \\frac{π(n)}{\\frac{n}{ln(n)}} = 1$$ This is equivalent to:
     $$π(n) \\sim \\frac{n}{ln(n)}$$ Thus, n/ln(n) approximates π(n) for large values of n. $$ $$")
   ),
   conditionalPanel(
-    condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n)",
+    condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n) && input.n <= 15000",
     htmlOutput("phi_value"),
     p("Euler's φ function counts the number of positive integers less than or equal to a positive integer n that are coprime to n.
       Two integers are considered coprime, if their greatest common divisor is 1. φ(n) is referred to as the totient of n. n being a
@@ -58,11 +58,11 @@ ui <- page_navbar(
       min = 1
     ),
     conditionalPanel(
-      condition = "!(Number.isInteger(input.n1)) || input.n1 < 1",
+      condition = "!(Number.isInteger(input.n1)) || input.n1 < 1 || input.n1 > 1000004249",
       p("Invalid input", style = "color: red;")
     ),
     conditionalPanel(
-      condition = "Number.isInteger(input.n1) && input.n1 >= 1",
+      condition = "Number.isInteger(input.n1) && input.n1 >= 1 && input.n1 <= 1000004249",
       htmlOutput("prime")
     )
   ),
@@ -75,11 +75,11 @@ ui <- page_navbar(
       min = 1
     ),
     conditionalPanel(
-      condition = "!(Number.isInteger(input.n2)) || input.n2 < 1",
+      condition = "!(Number.isInteger(input.n2)) || input.n2 < 1 || input.n2 > 30000000",
       p("Invalid input", style = "color: red;")
     ),
     conditionalPanel(
-      condition = "Number.isInteger(input.n2) && input.n2 >= 1",
+      condition = "Number.isInteger(input.n2) && input.n2 >= 1 && input.n2 <= 30000000",
       htmlOutput("nth")
     )
   ),
@@ -123,13 +123,23 @@ server <- function(input, output){
       
       x <- 1
       
-      while(nth_prime(x) < input$n1){
+      while(nth_prime(x) < input$n1 & x < 10000){
         x <- x +1
       }
+      
+      if (input$n1 <= 104729){
       
       HTML(
         paste0(input$n1, " is a prime number.<br/><br/>primes(", x, ") = ", input$n1)
       )
+        
+      } else {
+        
+        HTML(
+          paste0(input$n1, " is a prime number.")
+        )
+        
+      }
       
     } else {
       
@@ -427,7 +437,7 @@ server <- function(input, output){
         }
       }
       
-    })
+    }, height = 300)
 }
 
 shinyApp(ui, server)
