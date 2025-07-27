@@ -87,7 +87,7 @@ ui <- page_navbar(
      "Impressum",
      h3("Impressum"),
      p("Anbieter:", br(), "Fedor Miasnikov", br(), "Silcherstr. 3", br(), "80807 München"),
-     p("Kontakt:", br(), "Telefon: 01721587811", br(), "E-Mail:miasnikowfedor@gmail.com")
+     p("Kontakt:", br(), "E-Mail:miasnikowfedor@gmail.com")
    )
 )
 
