@@ -26,23 +26,23 @@ ui <- page_navbar(
     )
   ),
   conditionalPanel(
-    condition = "!(Number.isInteger(input.n)) || input.n < 1 || input.n > 10000",
+    condition = "!(Number.isInteger(input.n)) || input.n < 1 || input.n > 5000",
     p("Invalid input", style = "color: red;")
 ),
   conditionalPanel(
-    condition = "input.func != '--' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 10000",
+    condition = "input.func != '--' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 5000",
     plotOutput("plot")
   ),
   conditionalPanel(
     withMathJax(),
-    condition = "input.func == 'Prime-counting function π(n)' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 10000",
+    condition = "input.func == 'Prime-counting function π(n)' && input.n >= 1 && Number.isInteger(input.n) && input.n <= 5000",
     htmlOutput("pi_value"),
     p("The prime-counting function, also referred to as π(n), counts the number of prime numbers less than or equal to a real number n.
     The prime number theorem states: $$\\lim_{n \\to \\infty} \\frac{π(n)}{\\frac{n}{ln(n)}} = 1$$ This is equivalent to:
     $$π(n) \\sim \\frac{n}{ln(n)}$$ Thus, n/ln(n) approximates π(n) for large values of n. $$ $$")
   ),
   conditionalPanel(
-    condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n) && input.n <= 10000",
+    condition = "input.func == \"Euler's totient function φ(n)\" && input.n >= 1 && Number.isInteger(input.n) && input.n <= 5000",
     htmlOutput("phi_value"),
     p("Euler's φ function counts the number of positive integers less than or equal to a positive integer n that are coprime to n.
       Two integers are considered coprime, if their greatest common divisor is 1. φ(n) is referred to as the totient of n. n being a
