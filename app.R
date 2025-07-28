@@ -75,11 +75,11 @@ ui <- page_navbar(
       min = 1
     ),
     conditionalPanel(
-      condition = "!(Number.isInteger(input.n2)) || input.n2 < 1 || input.n2 > 5000000",
+      condition = "!(Number.isInteger(input.n2)) || input.n2 < 1 || input.n2 > 50000000",
       p("Invalid input", style = "color: red;")
     ),
     conditionalPanel(
-      condition = "Number.isInteger(input.n2) && input.n2 >= 1 && input.n2 <= 5000000",
+      condition = "Number.isInteger(input.n2) && input.n2 >= 1 && input.n2 <= 50000000",
       htmlOutput("nth")
     )
   ),
@@ -115,7 +115,7 @@ server <- function(input, output){
   
   output$nth <- renderUI({
     
-    if (input$n2 <= 5000000){
+    if (input$n2 <= 50000000){
     
     HTML(
       paste0(
